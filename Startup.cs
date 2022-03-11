@@ -30,6 +30,11 @@ namespace ReversiMvcApp
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddDbContext<ReversiDbContext>(options =>
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("Spellen")));
+
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)

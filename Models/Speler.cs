@@ -1,15 +1,13 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.AspNetCore.Identity;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace ReversiMvcApp.Models
 {
     public class Speler
     {
-        [Key, Column(TypeName = "string(100)")]
-        public Guid Guid { get; set; }
+        [Key, MaxLength(100)]
+        public string Guid { get; set; }
 
+        [MaxLength(50)]
         public string Naam { get; set; }
 
         public int AantalGewonnen { get; set; }
