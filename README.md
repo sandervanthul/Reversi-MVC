@@ -1,2 +1,2 @@
 # Reversi-MVC
- Reversi backend
+ Reversi backend voor Windesheim project
