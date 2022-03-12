@@ -1,0 +1,713 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "ReversiWebApi",
+    "version": "v1"
+  },
+  "paths": {
+    "/api/Spel": {
+      "get": {
+        "tags": [
+          "Spel"
+        ],
+        "operationId": "GetSpelOmschrijvingenVanSpellenMetWachtendeSpeler",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Spel"
+        ],
+        "operationId": "ToevoegenSpel",
+        "parameters": [
+          {
+            "name": "omschrijving",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "nullable": true
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "string",
+                "nullable": true
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "string",
+                "nullable": true
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Spel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Spel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Spel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Spel/{spelToken}": {
+      "get": {
+        "tags": [
+          "Spel"
+        ],
+        "operationId": "GetSpel",
+        "parameters": [
+          {
+            "name": "spelToken",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "nullable": true
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "string",
+                "nullable": true
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "string",
+                "nullable": true
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Spel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Spel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Spel"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Spel/Speler": {
+      "get": {
+        "tags": [
+          "Spel"
+        ],
+        "operationId": "GetSpelMetSpelerToken",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "nullable": true
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "string",
+                "nullable": true
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "string",
+                "nullable": true
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Spel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Spel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Spel"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Spel/Beurt": {
+      "get": {
+        "tags": [
+          "Spel"
+        ],
+        "operationId": "GetBeurt",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "nullable": true
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "string",
+                "nullable": true
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "string",
+                "nullable": true
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Spel/AddSpel/TestJsonConverter": {
+      "post": {
+        "tags": [
+          "Spel"
+        ],
+        "operationId": "ToevoegenSpel",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Spel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Spel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Spel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Spel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Spel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Spel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Spel/Zet": {
+      "put": {
+        "tags": [
+          "Spel"
+        ],
+        "operationId": "DoeZet",
+        "parameters": [
+          {
+            "name": "rij",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "kolom",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "spelToken": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "spelerToken": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                }
+              },
+              "encoding": {
+                "spelToken": {
+                  "style": "form"
+                },
+                "spelerToken": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Spel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Spel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Spel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Spel/Passen": {
+      "put": {
+        "tags": [
+          "Spel"
+        ],
+        "operationId": "Passen",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "spelToken": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "spelerToken": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                }
+              },
+              "encoding": {
+                "spelToken": {
+                  "style": "form"
+                },
+                "spelerToken": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Kleur": {
+        "enum": [
+          0,
+          1,
+          2
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "Spel": {
+        "type": "object",
+        "properties": {
+          "bord": {
+            "maxLength": 255,
+            "type": "string",
+            "nullable": true
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "omschrijving": {
+            "maxLength": 255,
+            "type": "string",
+            "nullable": true
+          },
+          "token": {
+            "maxLength": 255,
+            "type": "string",
+            "nullable": true
+          },
+          "speler1Token": {
+            "maxLength": 255,
+            "type": "string",
+            "nullable": true
+          },
+          "speler2Token": {
+            "maxLength": 255,
+            "type": "string",
+            "nullable": true
+          },
+          "aandeBeurt": {
+            "$ref": "#/components/schemas/Kleur"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": { }
+      }
+    }
+  }
+}

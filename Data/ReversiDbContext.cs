@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ReversiMvcApp.Models;
+using SpelApiClient;
 
 namespace ReversiMvcApp.Data
 {
@@ -9,7 +10,9 @@ namespace ReversiMvcApp.Data
             : base(options)
         {
         }
+
         public DbSet<Speler> Spelers { get; set; }
+        public DbSet<Spel> Spellen { get; set; } 
     }
 }
 
