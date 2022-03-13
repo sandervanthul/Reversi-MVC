@@ -25,7 +25,7 @@ namespace ReversiMvcApp.Controllers
             return View(await _context.Spelers.ToListAsync());
         }
 
-        // GET: Spelers/Details/5
+        // GET: Spelers/Play/5
         public async Task<IActionResult> Details(string id)
         {
             if (id == null)

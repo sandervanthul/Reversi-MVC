@@ -1,17 +1,13 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ReversiMvcApp.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using ReversiMvcApp.Models;
+using ReversiMvcApp.Services;
 
 namespace ReversiMvcApp
 {
@@ -39,7 +35,12 @@ namespace ReversiMvcApp
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddHttpClient();
+
             services.AddControllersWithViews();
+
+            services.AddScoped<IService<Spel>, Service<Spel>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
