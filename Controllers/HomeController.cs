@@ -29,14 +29,24 @@ namespace ReversiMvcApp.Controllers
             ClaimsPrincipal currentUser = this.User;
             var currentUserID = currentUser.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
+            // Haal het spel
             var response = await _service.GetAsync(currentUserID, "/api/Speler");
+
             if (response.Token != null) return RedirectToAction("Play", nameof(Spellen), new {id = response.Token});  
             return View();
         }
 
         [Authorize]
-        public IActionResult Privacy()
+        public async Task<IActionResult> Privacy()
         {
+            ClaimsPrincipal currentUser = this.User;
+            var currentUserID = currentUser.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            // Haal het spel
+            var response = await _service.GetAsync(currentUserID, "/api/Speler");
+
+            if (response.Token != null) return RedirectToAction("Play", nameof(Spellen), new {id = response.Token});  
+
             return View();
         }
 

@@ -4,20 +4,22 @@
     ViewData["Title"] = "Play";
 }
 
-<h1>Play</h1>
+@section Scripts {
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+<script src="https://unpkg.com/regenerator-runtime@0.13.1/runtime.js"></script>
+<link rel="stylesheet" href="~/css/style.min.css"/>
+<script src="~/js/app.js"></script>
+}
 
-<div>
-    <h4>Spel</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Omschrijving)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Omschrijving)
-        </dd>
-    </dl>
-</div>
 <div>
     <a asp-action="Index">Terug naar spellen</a>
 </div>
+
+<figure class="board"></figure>
+
+<script>
+    $(document).ready(function() {
+        Game.init(function(){});
+    });
+</script>
+
