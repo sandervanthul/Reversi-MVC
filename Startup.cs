@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using ReversiMvcApp.Data;
 using ReversiMvcApp.Models;
 using ReversiMvcApp.Services;
+using ReversiMvcApp.Hubs;
 
 namespace ReversiMvcApp
 {
@@ -35,6 +36,8 @@ namespace ReversiMvcApp
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddSignalR();
 
             services.AddHttpClient();
 
@@ -71,6 +74,7 @@ namespace ReversiMvcApp
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
+                endpoints.MapHub<ReversiHub>("/reversiHub");
             });
         }
     }
