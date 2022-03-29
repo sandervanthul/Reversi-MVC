@@ -1,4 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace ReversiMvcApp.Models
 {
@@ -21,5 +24,7 @@ namespace ReversiMvcApp.Models
         public string Speler2Token { get; set; }
 
         public Kleur AandeBeurt { get; set; }
+
+        public string Bord { get; set; }
     }
 }

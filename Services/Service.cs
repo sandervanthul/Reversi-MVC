@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using ReversiMvcApp.ApiClientLib;
+using ReversiMvcApp.Models;
 
 namespace ReversiMvcApp.Services
 {
@@ -21,6 +22,13 @@ namespace ReversiMvcApp.Services
         }
 
         public async Task<string> AddAsync(T item, string path)
+        {
+            var response = await _apiClient.Post(path, item);
+            if (response.IsSuccessStatusCode) return await response.Content.ReadAsStringAsync();
+            return "";
+        }
+
+        public async Task<string> JoinAsync(SpelViewModel item, string path)
         {
             var response = await _apiClient.Post(path, item);
             if (response.IsSuccessStatusCode) return await response.Content.ReadAsStringAsync();
@@ -57,11 +65,12 @@ namespace ReversiMvcApp.Services
             return false;
         }
 
-        public async Task<bool> UpdateSpecialAsync(int id, object item, string path)
+        public async Task<T> UpdateSpecialAsync(string id, object item, string path)
         {
-            var response = await _apiClient.Put(path, id.ToString(), item);
-            if (response.IsSuccessStatusCode) return true;
-            return false;
+            T newState = new();
+            var response = await _apiClient.Put(path, id, item);
+            if (response.IsSuccessStatusCode) newState = await response.Content.ReadAsAsync<T>();
+            return newState;
         }
     }
 }

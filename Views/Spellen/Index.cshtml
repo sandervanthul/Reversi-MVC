@@ -1,4 +1,5 @@
-﻿@model IEnumerable<ReversiMvcApp.Models.Spel>
+﻿@using System.Linq
+@model IEnumerable<ReversiMvcApp.Models.Spel>
 
 @{
     ViewData["Title"] = "Index";
@@ -15,19 +16,14 @@
             <th>
                 @Html.DisplayNameFor(model => model.Omschrijving)
             </th>
-            <th></th>
+            <th>
+            </th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Omschrijving)
-            </td>
-            <td>
-                <a asp-action="Play" asp-route-id="@item.Token">Join</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            @await Html.PartialAsync("SpelRow", item)
+        }
     </tbody>
 </table>

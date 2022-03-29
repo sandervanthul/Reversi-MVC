@@ -25,6 +25,19 @@ namespace ReversiMvcApp.Controllers
             return View(await _service.GetAsync(""));
         }
 
+        public async Task<IActionResult> Join(Spel spel)
+        {
+            ClaimsPrincipal currentUser = this.User;
+            var currentUserID = currentUser.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            var request = new SpelViewModel() {SpelerToken = currentUserID, SpelToken = spel.Token};
+
+            var response = await _service.JoinAsync(request, "/api/Speler/");
+
+            if(response != "") return RedirectToAction(nameof(Play), new {id = response});
+            return RedirectToAction(nameof(Index));
+        }
+
         // GET: Spellen/Play/5
         public async Task<IActionResult> Play(string id)
         {

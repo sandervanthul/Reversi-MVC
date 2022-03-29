@@ -34,7 +34,7 @@ namespace ReversiMvcApp.ApiClientLib
 
         public async Task<HttpResponseMessage> Put<T>(string path, string key, T entity)
         {
-            path += "/" + key;
+            if (key != "") path += "/" + key;
 
             var response = await _client.PutAsJsonAsync(path, entity);
             return response;

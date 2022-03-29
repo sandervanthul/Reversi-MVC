@@ -1,26 +1,48 @@
-﻿@model ReversiMvcApp.Models.Spel
+﻿@using System.Security.Claims
+@using System.Security.Cryptography.X509Certificates
+@model ReversiMvcApp.Models.Spel
 
 @{
     ViewData["Title"] = "Play";
 }
 
 @section Scripts {
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
 <script src="https://unpkg.com/regenerator-runtime@0.13.1/runtime.js"></script>
-<link rel="stylesheet" href="~/css/style.min.css"/>
+<link rel="stylesheet" href="~/css/style.min.css" />
 <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
 <script src="~/js/app.js"></script>
+<script src="~/lib/vendor/handlebars-v4.7.7.js"></script>
+<script src="~/js/templates.js"></script>
+<script src="~/js/ReversiSR.js"></script>
 }
 
 <div>
     <a asp-action="Index">Terug naar spellen</a>
 </div>
 
-<figure class="board"></figure>
-
+<figure id="board"></figure>
+@{
+    ClaimsPrincipal currentUser = this.User;
+    var currentUserID = currentUser.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+    int CheckTurn()
+    {
+        if ((Model.Speler1Token == currentUserID ? Kleur.Wit : Kleur.Zwart) == Model.AandeBeurt)
+            return 1;
+        return 2;
+    }
+}
 <script>
     $(function() {
-        Game.init(function(){});
+        $('#board').append(Game.Template.parseTemplate("board", @Model.Bord));
+
+        Game.init(function() {
+            if (@CheckTurn() === 1) {
+                addEventListenersToBoard();
+            }
+        });
     });
+
 </script>
+
+
 

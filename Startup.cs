@@ -6,9 +6,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ReversiMvcApp.Data;
+using ReversiMvcApp.Hubs;
 using ReversiMvcApp.Models;
 using ReversiMvcApp.Services;
-using ReversiMvcApp.Hubs;
 
 namespace ReversiMvcApp
 {
@@ -36,6 +36,8 @@ namespace ReversiMvcApp
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddHttpContextAccessor();
 
             services.AddSignalR();
 
