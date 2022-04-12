@@ -28,6 +28,13 @@ namespace ReversiMvcApp.Services
             return "";
         }
 
+        public async Task<string> AddAsync(SpelViewModel item, string path)
+        {
+            var response = await _apiClient.Post(path, item);
+            if (response.IsSuccessStatusCode) return await response.Content.ReadAsStringAsync();
+            return "";
+        }
+
         public async Task<string> JoinAsync(SpelViewModel item, string path)
         {
             var response = await _apiClient.Post(path, item);
@@ -35,11 +42,10 @@ namespace ReversiMvcApp.Services
             return "";
         }
 
-        public async Task<bool> DeleteAsync(int id, string path)
+        public async Task<bool> DeleteAsync(string id, string path)
         {
-            var response = await _apiClient.Delete(path, id.ToString());
-            if (response.IsSuccessStatusCode) return true;
-            return false;
+            var response = await _apiClient.Delete(path, id);
+            return response.IsSuccessStatusCode;
         }
 
         public async Task<List<T>> GetAsync(string path)
@@ -58,11 +64,18 @@ namespace ReversiMvcApp.Services
             return item;
         }
 
+        public async Task<bool> GetSpecialAsync(string id, string path)
+        {
+            bool item = false;
+            var response = await _apiClient.Get(path, id);
+            if (response.IsSuccessStatusCode) item = await response.Content.ReadAsAsync<bool>();
+            return item;
+        }
+
         public async Task<bool> UpdateAsync(int id, T item, string path)
         {
             var response = await _apiClient.Put(path, id.ToString(), item);
-            if (response.IsSuccessStatusCode) return true;
-            return false;
+            return response.IsSuccessStatusCode;
         }
 
         public async Task<T> UpdateSpecialAsync(string id, object item, string path)

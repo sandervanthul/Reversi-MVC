@@ -68,13 +68,25 @@ namespace ReversiMvcApp.Controllers
             {
                 ClaimsPrincipal currentUser = this.User;
                 var currentUserID = currentUser.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-                spel.Speler1Token = currentUserID;
+                var spelModel = new SpelViewModel(){SpelerToken = currentUserID, Omschrijving = spel.Omschrijving};
 
-                var response = await _service.AddAsync(spel, "");
+                var response = await _service.AddAsync(spelModel, "");
 
                 if(response != "") return RedirectToAction(nameof(Play), new {id = response});
             }
-            return View(spel);
+            return View();
+        }
+
+        public async Task<IActionResult> Forfeit()
+        {
+            ClaimsPrincipal currentUser = this.User;
+            var currentUserID = currentUser.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            var response = await _service.DeleteAsync(currentUserID, "/api/Speler");
+
+            if(response) return RedirectToAction(nameof(Index));
+
+            return RedirectToAction(nameof(Play));
         }
 
         // GET: Spellen/Edit/5

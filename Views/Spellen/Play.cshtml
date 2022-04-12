@@ -14,13 +14,26 @@
 <script src="~/lib/vendor/handlebars-v4.7.7.js"></script>
 <script src="~/js/templates.js"></script>
 <script src="~/js/ReversiSR.js"></script>
+<script language="javascript" type="text/javascript">
+    //window.onbeforeunload = function () {
+    //    if (confirm('Are you sure to exit')) {
+
+    //    }
+    //    else
+    //        return false;
+    //}
+</script>
 }
 
 <div>
-    <a asp-action="Index">Terug naar spellen</a>
+    <button id="opgevenButton" class="btn btn-danger">Opgeven</button>
+</div>
+<div>
+    <button id="passButton" class="btn btn-primary">Passen</button>
 </div>
 
 <figure id="board"></figure>
+
 @{
     ClaimsPrincipal currentUser = this.User;
     var currentUserID = currentUser.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -31,6 +44,7 @@
         return 2;
     }
 }
+
 <script>
     $(function() {
         $('#board').append(Game.Template.parseTemplate("board", @Model.Bord));
@@ -38,11 +52,95 @@
         Game.init(function() {
             if (@CheckTurn() === 1) {
                 addEventListenersToBoard();
+            } else {
+                document.getElementById("opgevenButton").disabled = true;
+                document.getElementById("passButton").disabled = true;
             }
+            addEventListenerToPassButton();
+            addEventListenerToForfeitButton();
         });
     });
-
 </script>
+
+<div class="scoreWhite">
+    <label class="scoreWhite-chip">&#9898;</label>
+    <label id="pointsWhite" class="scoreWhite-number">2</label>
+</div>
+
+<div class="scoreBlack">
+    <label class="scoreBlack-chip">&#9899;</label>
+    <label id="pointsBlack" class="scoreBlack-number">2</label>
+</div>
+
+<dialog id="gewonnenModal" class="modalWin">
+    <h2> Je hebt gewonnen! </h2>
+    <p>
+        <pre>
+             .-=========-.
+             \'-=======-'/
+             _|   .=.   |_
+            ((|  {{1}}  |))
+             \|   /|\   |/
+              \__ '`' __/
+                _`) (`_
+              _/_______\_
+             /___________\
+     </pre>
+    </p>
+    <p>Het spel is afgelopen, ga terug naar spellen</p>
+    <a asp-action="Index" class="btn btn-primary">Terug naar spellen</a>
+</dialog>
+
+<dialog id="verlorenModal" class="modalLost">
+    <h2> Je hebt verloren</h2>
+    <p>
+        <pre>
+ ______     ______     ______   ______   ______     ______    
+/\  == \   /\  ___\   /\__  _\ /\__  _\ /\  ___\   /\  == \   
+\ \  __<   \ \  __\   \/_/\ \/ \/_/\ \/ \ \  __\   \ \  __<   
+ \ \_____\  \ \_____\    \ \_\    \ \_\  \ \_____\  \ \_\ \_\ 
+  \/_____/   \/_____/     \/_/     \/_/   \/_____/   \/_/ /_/ 
+
+ __         __  __     ______     __  __                      
+/\ \       /\ \/\ \   /\  ___\   /\ \/ /                      
+\ \ \____  \ \ \_\ \  \ \ \____  \ \  _"-.                    
+ \ \_____\  \ \_____\  \ \_____\  \ \_\ \_\                   
+  \/_____/   \/_____/   \/_____/   \/_/\/_/ 
+
+</pre>
+    </p>
+    <p>
+        <pre>
+ __   __     ______     __  __     ______                     
+/\ "-.\ \   /\  ___\   /\_\_\_\   /\__  _\                    
+\ \ \-.  \  \ \  __\   \/_/\_\/_  \/_/\ \/                    
+ \ \_\\"\_\  \ \_____\   /\_\/\_\    \ \_\                    
+  \/_/ \/_/   \/_____/   \/_/\/_/     \/_/                    
+                                                              
+ ______   __     __    __     ______                          
+/\__  _\ /\ \   /\ "-./  \   /\  ___\                         
+\/_/\ \/ \ \ \  \ \ \-./\ \  \ \  __\                         
+   \ \_\  \ \_\  \ \_\ \ \_\  \ \_____\                       
+    \/_/   \/_/   \/_/  \/_/   \/_____/        
+</pre>
+    </p>
+    <p>Het spel is afgelopen, ga terug naar spellen</p>
+    <a asp-action="Index" class="btn btn-primary">Terug naar spellen</a>
+</dialog>
+
+<section class="widget widget-hidden widget-success" id="feedback-success">
+    <figure class="widget__vinkje">
+        <img class="widget__vinkje__img" src="assets/feedbackwidget/checkmark.png">
+    </figure>
+    <div class="widget__bericht">
+        <p class="widget__bericht__text"></p>
+    </div>
+    <figure class="widget__kruisje">
+        <input type="image" id="close" src="assets/feedbackwidget/cancel.png" />
+    </figure>
+    <button class="widget__button widget__accepteer bibber">Accepteren</button>
+    <button class="widget__button widget__weiger">Weigeren</button>
+</section>
 
 
 

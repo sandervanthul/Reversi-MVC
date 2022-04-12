@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace ReversiMvcApp.Models
 {
-    public enum Kleur { Geen, Wit, Zwart };
+    public enum Kleur { Geen, Wit, Zwart, NewWit, NewZwart, MogelijkeZet };
 
     public class Spel
     {
@@ -26,5 +26,8 @@ namespace ReversiMvcApp.Models
         public Kleur AandeBeurt { get; set; }
 
         public string Bord { get; set; }
+
+        public int AantalWit { get; set; }
+        public int AantalZwart { get; set; }
     }
 }
