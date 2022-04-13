@@ -12,17 +12,9 @@
 <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
 <script src="~/js/app.js"></script>
 <script src="~/lib/vendor/handlebars-v4.7.7.js"></script>
+<script src="~/lib/vendor/chart.min.js"></script>
 <script src="~/js/templates.js"></script>
 <script src="~/js/ReversiSR.js"></script>
-<script language="javascript" type="text/javascript">
-    //window.onbeforeunload = function () {
-    //    if (confirm('Are you sure to exit')) {
-
-    //    }
-    //    else
-    //        return false;
-    //}
-</script>
 }
 
 <div>
@@ -58,9 +50,18 @@
             }
             addEventListenerToPassButton();
             addEventListenerToForfeitButton();
+            addEventListenerToStatsButton();
+            createStats();
         });
     });
 </script>
+
+<button id="statsButton" class="btn btn-info">Statistieken</button>
+
+<dialog id="statistiekenModal">
+    <canvas id="myChart" width="400" height="400"></canvas>
+</dialog>
+
 
 <div class="scoreWhite">
     <label class="scoreWhite-chip">&#9898;</label>
@@ -116,7 +117,7 @@
 \ \ \-.  \  \ \  __\   \/_/\_\/_  \/_/\ \/                    
  \ \_\\"\_\  \ \_____\   /\_\/\_\    \ \_\                    
   \/_/ \/_/   \/_____/   \/_/\/_/     \/_/                    
-                                                              
+
  ______   __     __    __     ______                          
 /\__  _\ /\ \   /\ "-./  \   /\  ___\                         
 \/_/\ \/ \ \ \  \ \ \-./\ \  \ \  __\                         

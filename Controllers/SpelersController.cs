@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,13 +12,16 @@ using ReversiMvcApp.Models;
 
 namespace ReversiMvcApp.Controllers
 {
+    [Authorize (Roles = "Admin")]
     public class SpelersController : Controller
     {
         private readonly ReversiDbContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public SpelersController(ReversiDbContext context)
+        public SpelersController(ReversiDbContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Spelers
@@ -141,7 +146,10 @@ namespace ReversiMvcApp.Controllers
         {
             var speler = await _context.Spelers.FindAsync(id);
             _context.Spelers.Remove(speler);
-            await _context.SaveChangesAsync();
+
+            var user = await _userManager.FindByIdAsync(id);
+            var response = await _userManager.DeleteAsync(user);
+            if(response.Succeeded)await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 

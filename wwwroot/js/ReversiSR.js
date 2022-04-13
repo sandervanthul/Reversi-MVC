@@ -26,7 +26,6 @@ const addEventListenersToBoard = function () {
 
 const addEventListenerToPassButton = function () {
     let button = document.getElementById("passButton");
-    console.log("click");
 
     button.addEventListener("click", function (event) {
         connection.invoke("Passen").catch(function (err) {
@@ -39,10 +38,21 @@ const addEventListenerToPassButton = function () {
 
 const addEventListenerToForfeitButton = function () {
     let button = document.getElementById("opgevenButton");
-    console.log("click");
 
     button.addEventListener("click", function (event) {
         connection.invoke("Opgeven").catch(function (err) {
+            return console.error(err.toString());
+        });
+
+        event.preventDefault();
+    });
+}
+
+const addEventListenerToStatsButton = function () {
+    let button = document.getElementById("statsButton");
+
+    button.addEventListener("click", function (event) {
+        connection.invoke("Statistieken").catch(function (err) {
             return console.error(err.toString());
         });
 
@@ -70,7 +80,6 @@ connection.on("EnablePassButton", function () {
     document.getElementById("passButton").disabled = false;
 });
 
-
 connection.on("DisableForfeitButton", function () {
     document.getElementById("opgevenButton").disabled = true;
 });
@@ -88,6 +97,25 @@ connection.on("Verloren", function () {
     let modal = document.getElementById("verlorenModal");
     modal.showModal();
 });
+
+connection.on("UpdateStatistieken", function () {
+    let labelZwart = $('#pointsBlack');
+    let labelWit = $('#pointsWhite');
+    Game.Stats.updateChart(labelZwart.text(), labelWit.text());
+});
+
+connection.on("ShowStatistieken", function () {
+    let modal = document.getElementById("statistiekenModal");
+    modal.showModal();
+});
+
+function createStats() {
+    let modal = document.getElementById("statistiekenModal");
+    modal.showModal();
+    const ctx = document.getElementById('myChart').getContext('2d');
+    Game.Stats.createChart(ctx);
+    modal.close();
+}
 
 const updateBord = function (bord) {
     let b = $('#board');

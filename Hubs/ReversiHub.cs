@@ -48,6 +48,8 @@ namespace ReversiMvcApp.Hubs
             await Clients.Caller.SendAsync("DisablePassButton");
             await Clients.Others.SendAsync("EnablePassButton");
 
+            await Clients.All.SendAsync("UpdateStatistieken");
+
 
             // todo fix lelijke code: maak aparte functie voor controle afgelopen game
 
@@ -124,6 +126,11 @@ namespace ReversiMvcApp.Hubs
 
             await Clients.Caller.SendAsync("Verloren");
             await Clients.Others.SendAsync("Gewonnen");
+        }
+
+        public async Task Statistieken()
+        {
+            await Clients.Caller.SendAsync("ShowStatistieken");
         }
     }
 }

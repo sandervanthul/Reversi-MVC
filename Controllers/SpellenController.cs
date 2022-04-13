@@ -4,6 +4,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,11 +15,17 @@ using ReversiMvcApp.Services;
 
 namespace ReversiMvcApp.Controllers
 {
+    //[Authorize (Policy = "SpelerNietInSpelPolicy")]
     public class SpellenController : Controller
     {
         private readonly IService<Spel> _service;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public SpellenController(IService<Spel> service) => _service = service;
+        public SpellenController(IService<Spel> service, UserManager<IdentityUser> userManager)
+        {
+            _service = service;
+            _userManager = userManager;
+        }
 
         // GET: Spellen
         public async Task<IActionResult> Index()
@@ -30,11 +38,11 @@ namespace ReversiMvcApp.Controllers
             ClaimsPrincipal currentUser = this.User;
             var currentUserID = currentUser.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            var request = new SpelViewModel() {SpelerToken = currentUserID, SpelToken = spel.Token};
+            var request = new SpelViewModel() { SpelerToken = currentUserID, SpelToken = spel.Token };
 
             var response = await _service.JoinAsync(request, "/api/Speler/");
 
-            if(response != "") return RedirectToAction(nameof(Play), new {id = response});
+            if (response != "") return RedirectToAction(nameof(Play), new { id = response });
             return RedirectToAction(nameof(Index));
         }
 
@@ -68,11 +76,17 @@ namespace ReversiMvcApp.Controllers
             {
                 ClaimsPrincipal currentUser = this.User;
                 var currentUserID = currentUser.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-                var spelModel = new SpelViewModel(){SpelerToken = currentUserID, Omschrijving = spel.Omschrijving};
+                var spelModel = new SpelViewModel() { SpelerToken = currentUserID, Omschrijving = spel.Omschrijving };
+
+                //IdentityUser user = await _userManager.FindByIdAsync(currentUserID);
+                //var claimNew = new Claim(ClaimTypes.Role, "SpelerInSpel");
+                //var claimOld = new Claim(ClaimTypes.Role, "SpelerNietInSpel");
+                //var result = await _userManager.ReplaceClaimAsync(user, claimOld, claimNew);
+                //if(result.Succeeded) Debug.WriteLine("SpelerInSpel claim added!!!");
 
                 var response = await _service.AddAsync(spelModel, "");
 
-                if(response != "") return RedirectToAction(nameof(Play), new {id = response});
+                if (response != "") return RedirectToAction(nameof(Play), new { id = response });
             }
             return View();
         }
@@ -84,7 +98,7 @@ namespace ReversiMvcApp.Controllers
 
             var response = await _service.DeleteAsync(currentUserID, "/api/Speler");
 
-            if(response) return RedirectToAction(nameof(Index));
+            if (response) return RedirectToAction(nameof(Index));
 
             return RedirectToAction(nameof(Play));
         }

@@ -1,6 +1,9 @@
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -44,6 +47,20 @@ namespace ReversiMvcApp
             services.AddHttpClient();
 
             services.AddControllersWithViews();
+
+            //services.AddAuthorization(options =>
+            //{
+            //    options.AddPolicy("SpelerNietInSpelPolicy",
+            //        policy => policy.RequireClaim("SpelerNietInSpel").RequireClaim("Speler"));
+            //});
+
+            services.AddMvc(config =>
+            {
+                var policy = new AuthorizationPolicyBuilder()
+                                 .RequireAuthenticatedUser()
+                                 .Build();
+                config.Filters.Add(new AuthorizeFilter(policy));
+            });
 
             services.AddScoped<IService<Spel>, Service<Spel>>();
         }

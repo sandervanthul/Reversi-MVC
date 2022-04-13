@@ -13,6 +13,7 @@ using ReversiMvcApp.Services;
 
 namespace ReversiMvcApp.Controllers
 {
+    //[Authorize (Policy = "SpelerNietInSpelPolicy")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
